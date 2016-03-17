@@ -7,7 +7,7 @@ require_once 'Monad.php';
 class Query implements Monad
 {
 
-    public function __construct($query = "")
+    public function __construct($query = '')
     {
         $this->query = $query;
     }
@@ -18,7 +18,7 @@ class Query implements Monad
     }
 
     public function bind(callable $function){
-        return NULL;
+        return new Query($function($this->query));
     }
 
 }
