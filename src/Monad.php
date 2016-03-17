@@ -2,9 +2,9 @@
 
 namespace Restaurant;
 
-interface Monad
+abstract class Monad
 {
-    public function __construct($value);
-    public function bind(callable $function);
-    public function get();
+    abstract public function __construct($value);
+    abstract public function bind(callable $function);
+    abstract public function get();
 }
