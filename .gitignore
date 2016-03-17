@@ -1,2 +1,5 @@
 vendor/
 /composer.lock
+/.atoum.php
+/.bootstrap.atoum.php
+/.dir-locals.el
