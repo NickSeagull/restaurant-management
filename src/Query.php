@@ -12,13 +12,14 @@ class Query implements Monad
         $this->query = $query;
     }
 
+    public function bind(callable $function)
+    {
+        return new Query($function($this->query));
+    }
+
     public function get()
     {
         return $this->query;
-    }
-
-    public function bind(callable $function){
-        return new Query($function($this->query));
     }
 
 }
