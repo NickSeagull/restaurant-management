@@ -6,7 +6,7 @@ require_once __DIR__ . '/../../QueryBuilder.php';
 
 use atoum;
 
-class QueryBuilder extends atoum
+class Query extends atoum
 {
     public function testConstructor ()
     {
@@ -15,4 +15,5 @@ class QueryBuilder extends atoum
             ->string($this->testedInstance->get())
             ->isEqualTo("");
     }
+
 }

@@ -4,7 +4,7 @@ namespace Restaurant;
 
 require_once 'Monad.php';
 
-class QueryBuilder implements Monad
+class Query implements Monad
 {
 
     public function __construct($query = "")
