@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/NickSeagull/restaurant-management.png?label=ready&title=Ready)](https://waffle.io/NickSeagull/restaurant-management)
 # Restaurant management system
 
 **This is just a toy project to start fiddling around with PHP**
