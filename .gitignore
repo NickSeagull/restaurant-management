@@ -3,3 +3,4 @@ vendor/
 /.atoum.php
 /.bootstrap.atoum.php
 /.dir-locals.el
+*.db

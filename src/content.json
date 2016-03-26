@@ -1,0 +1,25 @@
+{
+    "navbars": {
+	"not_logged": {
+	    "Menu": "menu.php",
+	    "Login": "login.php"
+	},
+	"logged_customer": {
+	    "Menu": "menu.php",
+	    "Logout": "logout.php"
+	},
+	"logged_waiter": {
+	    "Menu": "menu.php",
+	    "Orders": "orders.php",
+	    "Logout": "logout.php"
+	},
+	"logged_cook": {
+	    "Menu": "menu.php",
+	    "Cooking": "cooking.php",
+	    "Logout": "logout.php"
+	}
+    },
+    "content": {
+	"main": "FooBar Restaurant, quality dishes since epoch, January 1st 1970."
+    }
+}
