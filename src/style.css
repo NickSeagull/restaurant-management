@@ -23,28 +23,28 @@ body {
     margin: 0 auto;
 }
 
-.header h1 {
+.header > h1 {
     text-align:center;
 }
 
-.navbar ul {
+.navbar > ul {
     list-style-type: none;
     margin: 0;
     padding: 9px 0 8px 0;
     background-color: #3f51b5;
 }
 
-.navbar ul li {
+.navbar > ul > li {
     display: inline;
 }
 
-.navbar ul li a {
+.navbar > ul > li > a {
     padding: 10px;
     text-decoration: none;
     color: white;
 }
 
-.navbar ul li a:hover{
+.navbar > ul > li > a:hover{
     background-color: #ff6d00;
 }
 
@@ -56,4 +56,27 @@ body {
     font-weight: bold;
     font-style:normal;
     color:#ff6d00;
+}
+
+.login {
+    text-align: center;
+}
+
+.login > form {
+    display: inline-block;
+}
+
+.login > form > input[type="text"],
+.login > form > input[type="password"]{
+    padding: 10px;
+    border: none;
+    border-bottom: solid 2px #c9c9c9;
+}
+
+.login > form > input[type="submit"]{
+    background-color: #ff6d00;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    font-size: 110%;
 }
