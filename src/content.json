@@ -4,16 +4,12 @@
 	    "Menu": "menu.php",
 	    "Login": "login.php"
 	},
-	"logged_customer": {
-	    "Menu": "menu.php",
-	    "Logout": "logout.php"
-	},
-	"logged_waiter": {
+	"waiter": {
 	    "Menu": "menu.php",
 	    "Orders": "orders.php",
 	    "Logout": "logout.php"
 	},
-	"logged_cook": {
+	"cook": {
 	    "Menu": "menu.php",
 	    "Cooking": "cooking.php",
 	    "Logout": "logout.php"
