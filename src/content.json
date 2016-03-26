@@ -20,6 +20,6 @@
 	}
     },
     "content": {
-	"main": "FooBar Restaurant, quality dishes since epoch, January 1st 1970."
+	"main": "content_main.html"
     }
 }

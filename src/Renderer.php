@@ -10,6 +10,10 @@ class Renderer {
         $result = $result . "</ul>";
         return $result;
     }
+
+    public function render_content($content_filename){
+        return file_get_contents($content_filename);
+    }
 }
 
 $renderer = new Renderer();

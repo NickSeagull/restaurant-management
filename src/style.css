@@ -53,5 +53,7 @@ body {
 }
 
 .accent-text {
+    font-weight: bold;
+    font-style:normal;
     color:#ff6d00;
 }
