@@ -10,8 +10,6 @@ function changed_query(){
     })
 }
 
-function log(x){ console.log(x); }
-
 function process(data){
     result = "<table class=\"menu\">";
     result += "<tr class=\"accent-text\"><td>Product</td><td>Price</td></tr>";
@@ -21,7 +19,6 @@ function process(data){
     	name = pair[0];
     	price = pair[1];
     	result += "<tr><td>" + name + "</td><td>" + price + "€</td></tr>";
-
     }
     result += "</table>";
     return result;
