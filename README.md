@@ -36,6 +36,15 @@ addition of:
   
 A **cook** will be able to see all the items that have to be prepared, allowing to say if the item is being prepared or it has been finished.
 
+## Login details
+Waiters:
+* cama1:uno
+* cama2:dos
+
+Cooks:
+* coci1:tres
+* coci2:cuatro
+
 ## Technical matters
 
 **PHP** will be used as the backend programming language, **SQLite** as the DB
