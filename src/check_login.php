@@ -19,7 +19,7 @@ $db_pass = $database_query
 if($pass == $db_pass){
     login_success($user);
 } else {
-    echo "Nope!";
+    login_failure();
 }
 
 function login_success($user){
@@ -34,6 +34,10 @@ function login_success($user){
     session_destroy();
     session_start();
     $_SESSION['role'] = $TYPES[$db_role];
-    header('Location: login.php');
+    header('Location: index.php');
     exit;
+}
+
+function login_failure(){
+    echo "Username or password was incorrect, try again.";
 }
