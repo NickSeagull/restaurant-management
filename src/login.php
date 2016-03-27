@@ -1,12 +1,9 @@
 <?php
-require_once("view.php");
+require_once("View.php");
 require_once("ContentExtractor.php");
-require_once("Renderer.php");
 
-$raw_navbar  = $content_extractor->get()->navbars->not_logged;
-$raw_content = $content_extractor->get()->content->login;
-$data = array("view_navbar"  => $renderer->render_navbar($raw_navbar),
-              "view_content" => $renderer->render_content($raw_content));
+$content_extractor = new ContentExtractor();
+$content = $content_extractor->get();
 
 $view = new View();
-$view->render("template.php", $data);
+$view->render($content['content']['login']);
