@@ -20,6 +20,7 @@
     },
     "content": {
 	"main": "content_main.html",
-	"login": "content_login.html"
+	"login": "content_login.html",
+	"menu": "content_menu.html"
     }
 }
