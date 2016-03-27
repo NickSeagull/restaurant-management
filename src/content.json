@@ -1,15 +1,18 @@
 {
     "navbars": {
 	"not_logged": {
+	    "Home": "index.php",
 	    "Menu": "menu.php",
 	    "Login": "login.php"
 	},
 	"waiter": {
+	    "Home": "index.php",
 	    "Menu": "menu.php",
 	    "Orders": "orders.php",
 	    "Logout": "logout.php"
 	},
 	"cook": {
+	    "Home": "index.php",
 	    "Menu": "menu.php",
 	    "Cooking": "cooking.php",
 	    "Logout": "logout.php"
