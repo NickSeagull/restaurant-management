@@ -11,6 +11,13 @@ folders in the projects, so dont expect a lot of modularity here.
 
 Also, the only external library I will be using is **atoum** for my tests.
 
+**To run the project:**
+```bash
+git clone https://github.com/NickSeagull/restaurant-management && cd restaurant-management/src
+php -S localhost:8080
+```  
+Then navigate to http://localhost:8080
+
 ## Requirements
 
 Implement a web application that allows managing a restaurant. Mostly a service
