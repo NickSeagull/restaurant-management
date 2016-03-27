@@ -5,37 +5,58 @@ require_once("DatabaseQuery.php");
 $TYPES = array(1 => "waiter",
                2 => "cook");
 
-$user = $_POST['user'];
-$pass = md5($_POST['pass']);
+check_login();
 
-$database_query = new DatabaseQuery();
+function check_login(){
+    if(password_is_correct()){
+        login_success(user_from_request());
+    } else {
+        login_failure();
+    }
+}
 
-$db_pass = $database_query
-         ->select("clave")
-         ->from("usuarios")
-         ->where("usuario = \"$user\"")
-         ->execute();
+function password_is_correct(){
+    return pass_from_request() == pass_from_database(user_from_request());
+}
 
-if($pass == $db_pass){
-    login_success($user);
-} else {
-    login_failure();
+function user_from_request(){
+    return $_POST['user'];
+}
+
+function pass_from_request(){
+    return md5($_POST['pass']);
+}
+
+function pass_from_database($user){
+    $database_query = new DatabaseQuery();
+    return $database_query
+        ->select("clave")
+        ->from("usuarios")
+        ->where("usuario = \"$user\"")
+        ->execute();
 }
 
 function login_success($user){
     global $TYPES;
+    reset_session();
+    $_SESSION['role'] = $TYPES[role_from_database($user)];
+    header('Location: index.php');
+    exit;
+}
+
+function reset_session(){
+    session_unset();
+    session_destroy();
+    session_start();
+}
+
+function role_from_database($user){
     $database_query = new DatabaseQuery();
-    $db_role = $database_query
+    return $database_query
              ->select("tipo")
              ->from("usuarios")
              ->where("usuario = \"$user\"")
              ->execute();
-    session_unset();
-    session_destroy();
-    session_start();
-    $_SESSION['role'] = $TYPES[$db_role];
-    header('Location: index.php');
-    exit;
 }
 
 function login_failure(){
