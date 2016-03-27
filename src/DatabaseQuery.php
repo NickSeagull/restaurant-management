@@ -38,6 +38,16 @@ class DatabaseQuery {
         $result = $this->database->query($query)->fetch();
         return $result[$this->selection];
     }
+
+    public function execute_for_all(){
+        $query = $this->query . ";\n";
+        $result = $this->database->query($query)->fetchAll();
+        $r = array();
+        foreach($result as $row){
+            $r[] =$row[$this->selection];
+        }
+        return $r;
+    }
 }
 
 $in_database = new DatabaseQuery();
