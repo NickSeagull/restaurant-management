@@ -29,6 +29,7 @@ class View {
     }
 
     public function __construct(){
+        session_start();
         $this->content_extractor = new ContentExtractor();
         $this->renderer = new Renderer();
         $this->set_navbar_on_session();
