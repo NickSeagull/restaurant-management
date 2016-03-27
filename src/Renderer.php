@@ -15,5 +15,3 @@ class Renderer {
         return file_get_contents($content_filename);
     }
 }
-
-$renderer = new Renderer();

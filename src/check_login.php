@@ -1,3 +1,6 @@
 <?php
 $user = $_POST['user'];
-$pass = $_POST['pass'];
+$pass = md5($_POST['pass']);
+
+echo "U: $user P: $pass";
+
