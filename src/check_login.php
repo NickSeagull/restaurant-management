@@ -4,7 +4,6 @@ require_once("DatabaseQuery.php");
 
 $TYPES = array(1 => "waiter",
                2 => "cook");
-
 check_login();
 
 function check_login(){

@@ -35,7 +35,8 @@ class View {
         $this->set_navbar_on_session();
     }
 
-    public function render($content){
+    public function render($content_name){
+        $content = $this->content_extractor->get()['content'][$content_name];
         $view_navbar = $this->renderer->render_navbar($this->navbar);
         $view_content = $this->renderer->render_content($content);
         include("template.php");

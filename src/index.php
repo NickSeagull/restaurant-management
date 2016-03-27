@@ -6,4 +6,4 @@ $content_extractor = new ContentExtractor();
 $content = $content_extractor->get();
 
 $view = new View();
-$view->render($content['content']['main']);
+$view->render('main');
