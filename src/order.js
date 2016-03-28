@@ -1,5 +1,81 @@
 var table_names = [];
 var table_ids = [];
+var orders = [];
+var items = [];
+var waiters = [];
+var catalog = [];
+var logged_user = "";
+
+$('document').ready(function(){
+    load_orders();
+    load_items();
+    load_catalog();
+    load_waiters();
+    load_logged_user();
+    setTimeout(greet_user(), 1000);
+    get_table_names();
+    get_table_ids();
+    setTimeout(process_tables, 1000);
+});
+
+function load_orders(){
+    $.ajax({
+	type: "GET",
+	url: "orders-api.php",
+	data: {method: "get_orders"},
+	success: function(data){
+	    orders = JSON.parse(data);
+	}
+    });
+}
+
+function load_items(){
+ $.ajax({
+	type: "GET",
+	url: "orders-api.php",
+	data: {method: "get_order_items"},
+	success: function(data){
+	    items = JSON.parse(data);
+	}
+    });
+}
+
+function load_catalog(){
+  $.ajax({
+	type: "GET",
+	url: "orders-api.php",
+	data: {method: "get_catalog"},
+	success: function(data){
+	    catalog = JSON.parse(data);
+	}
+  });
+}
+
+function load_waiters(){
+    $.ajax({
+	type: "GET",
+	url: "orders-api.php",
+	data: {method: "get_waiters"},
+	success: function(data){
+	    waiters = JSON.parse(data);
+	}
+    });
+}
+
+function load_logged_user(){
+    $.ajax({
+	type: "GET",
+	url: "orders-api.php",
+	data: {method: "get_logged_id"},
+	success: function(data){
+	    //logged_user = waiters[parseInt(data)]["nombre"];
+	}
+    });
+}
+
+function greet_user(){
+    $('.header').append("<h1>Welcome " + logged_user + "!</h1>");
+}
 
 function get_table_names(){
     $.ajax({
@@ -7,8 +83,7 @@ function get_table_names(){
 	url: "orders-api.php",
 	data: {method: "get_tables"},
 	success: function(data){
-	    table_names = data.split(";");
-	    table_names.pop();
+	    table_names = JSON.parse(data);
 	}
     });
 }
@@ -19,8 +94,7 @@ function get_table_ids(){
 	url: "orders-api.php",
 	data: {method: "get_table_ids"},
 	success: function(data){
-	    table_ids = data.split(";");
-	    table_ids.pop();
+	    table_ids = JSON.parse(data);
 	}
     });
 }
@@ -54,18 +128,64 @@ function build_table_link(table, table_id){
 function show_order_menu_for(table, id){
     var table_id = "#order-table-" + id;
     if ($(table_id).is(':empty')) {
-	$(table_id).append(build_table_order_menu(table, id));
+	$(table_id).html(build_table_order_menu(table, id));
     } else {
 	$(table_id).html("");
     }
 }
 
-function build_table_order_menu(table, id){
-    return "HELLO, ITS ME " + table + " WITH ID " + id;
+function build_table_order_menu(table, table_id){
+    if (!order_exists_for(table_id)){
+	return $('<a></a>', {
+	    href: '#',
+	    onclick: 'new_order('+table_id+');',
+	    text: "New order"
+	});
+    } else {
+	return process_order(get_order_for(table_id));
+    }
 }
 
-$('document').ready(function(){
-    get_table_names();
-    get_table_ids();
-    setTimeout(process_tables, 1000);
-});
+function order_exists_for(id){
+    return orders.filter(function(e){
+	return e["id"] == id;
+    }).length != 0;
+}
+
+function new_order(table_id){
+    orders[table_id] = {"ayy": "lmao"};
+}
+
+function process_order(order){
+    var table = order["mesa"];
+    var waiter = waiters[parseInt(order["camareroapertura"])-1]["nombre"];
+    var date = new Date(parseInt(order["horaapertura"]));
+    var time = date.getHours() + ":" + date.getMinutes();
+    return "<h4>Waiter:</h4>" +
+	waiter +
+	"<h4>Time:</h4>" +
+	time+
+	"<h4>Orders:</h4>"+
+	loadItems(order);
+}
+
+function loadItems(order){
+    var local_items = items.filter(function(e){return e["comanda"] == order["id"];});
+    var items_list = "<ul>";
+    local_items.forEach(function(e){
+	items_list += "<li>" + get_name_from_catalog(e["articulo"])["nombre"] + "</li>";
+    });
+    return items_list + "</ul>";
+}
+
+function get_name_from_catalog(id){
+    return catalog.filter(function(e){
+	return e["id"] == id;
+    })[0];
+}
+
+function get_order_for(id){
+    return orders.filter(function(e){
+	return e["id"] == id;
+    })[0];
+}

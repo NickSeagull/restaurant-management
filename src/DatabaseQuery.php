@@ -48,6 +48,13 @@ class DatabaseQuery {
         }
         return $r;
     }
+
+    public function execute_and_get_pdo(){
+        $query = $this->query . ";\n";
+        $result = $this->database->query($query)->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
 }
 
 $in_database = new DatabaseQuery();

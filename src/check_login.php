@@ -39,6 +39,7 @@ function login_success($user){
     global $TYPES;
     reset_session();
     $_SESSION['role'] = $TYPES[role_from_database($user)];
+    $_SESSION['id'] = id_from_database($user);
     header('Location: index.php');
     exit;
 }
@@ -53,6 +54,15 @@ function role_from_database($user){
     $database_query = new DatabaseQuery();
     return $database_query
              ->select("tipo")
+             ->from("usuarios")
+             ->where("usuario = \"$user\"")
+             ->execute();
+}
+
+function id_from_database($user){
+    $database_query = new DatabaseQuery();
+    return $database_query
+             ->select("id")
              ->from("usuarios")
              ->where("usuario = \"$user\"")
              ->execute();

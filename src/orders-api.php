@@ -1,5 +1,6 @@
 <?php
 require_once("DatabaseQuery.php");
+session_start();
 
 dispatch($_GET['method']);
 
@@ -13,11 +14,7 @@ function get_tables(){
             ->select("nombre")
             ->from("mesas")
             ->execute_for_all();
-    $r = "";
-    foreach($tables as $table){
-        $r .= "$table;";
-    }
-    echo $r;
+    echo json_encode($tables);
 }
 
 function get_table_ids(){
@@ -26,9 +23,45 @@ function get_table_ids(){
             ->select("id")
             ->from("mesas")
             ->execute_for_all();
-    $r = "";
-    foreach($tables as $table){
-        $r .= "$table;";
-    }
-    echo $r;
+    echo json_encode($tables);
+}
+
+function get_orders(){
+    $database_query = new DatabaseQuery();
+    $tables = $database_query
+            ->select("*")
+            ->from("comandas")
+            ->execute_and_get_pdo();
+    echo json_encode($tables);
+}
+
+function get_order_items(){
+    $database_query = new DatabaseQuery();
+    $tables = $database_query
+            ->select("*")
+            ->from("lineascomanda")
+            ->execute_and_get_pdo();
+    echo json_encode($tables);
+}
+
+function get_catalog(){
+    $database_query = new DatabaseQuery();
+    $tables = $database_query
+            ->select("*")
+            ->from("articulos")
+            ->execute_and_get_pdo();
+    echo json_encode($tables);
+}
+
+function get_waiters(){
+    $database_query = new DatabaseQuery();
+    $tables = $database_query
+            ->select("nombre")
+            ->from("usuarios")
+            ->execute_and_get_pdo();
+    echo json_encode($tables);
+}
+
+function get_logged_id(){
+    echo $_SESSION['id'];
 }
