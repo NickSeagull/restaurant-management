@@ -1,4 +1,3 @@
-[![Stories in Ready](https://badge.waffle.io/NickSeagull/restaurant-management.png?label=ready&title=Ready)](https://waffle.io/NickSeagull/restaurant-management)
 # Restaurant management system
 
 **This is just a toy project to start fiddling around with PHP**
@@ -10,6 +9,13 @@ The environment where the assignment is submitted to does not support using
 folders in the projects, so dont expect a lot of modularity here.
 
 Also, the only external library I will be using is **atoum** for my tests.
+
+**To run the project:**
+```bash
+git clone https://github.com/NickSeagull/restaurant-management && cd restaurant-management/src
+php -S localhost:8080
+```  
+Then navigate to http://localhost:8080
 
 ## Requirements
 
