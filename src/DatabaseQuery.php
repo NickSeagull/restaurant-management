@@ -33,6 +33,33 @@ class DatabaseQuery {
         return $this->bind(";\n");
     }
 
+    public function insert_into($table){
+        return $this->bind("INSERT INTO [$table] ");
+    }
+
+    public function fields(){
+        $fields = "(";
+        $fields .= implode(",", array_map(function($f){
+            return "[$f]";
+        }, func_get_args()));
+        $fields .= ") ";
+        return  $this->bind($fields);
+    }
+
+    public function values(){
+        $values = "VALUES (";
+        $values .= implode(",", array_map(function($v){
+            return "'$v'";
+        }, func_get_args()));
+        $values .= ") ";
+        return $this->bind($values);
+    }
+
+    public function commit(){
+        $query = $this->query .";\n";
+        return $this->database->exec($query);
+    }
+
     public function execute(){
         $query = $this->query . ";\n";
         $result = $this->database->query($query)->fetch();

@@ -2,10 +2,18 @@
 require_once("DatabaseQuery.php");
 session_start();
 
-dispatch($_GET['method']);
+if(isset($_GET['method'])){
+    dispatch_get($_GET['method']);
+} else {
+    dispatch_post($_POST['method'], $_POST['args']);
+}
 
-function dispatch($method){
+function dispatch_get($method){
     call_user_func($method);
+}
+
+function dispatch_post($method, $args){
+    call_user_func($method, json_decode($_POST['args']));
 }
 
 function get_tables(){
@@ -64,4 +72,29 @@ function get_waiters(){
 
 function get_logged_id(){
     echo $_SESSION['id'];
+}
+
+function commit_item($args){
+    $database_query = new DatabaseQuery();
+
+    $item = $args[0];
+    $order = $args[1];
+    $waiter = $_SESSION['id'];
+    $time = time();
+    $type = $database_query
+          ->select("tipo")
+          ->from("articulos")
+          ->execute();
+
+    $database_query = new DatabaseQuery();
+    $success = $database_query
+             ->insert_into("lineascomanda")
+             ->fields("comanda",
+                      "articulo",
+                      "camareropeticion",
+                      "horapeticion",
+                      "tipo")
+             ->values($order, $item, $waiter, $time, $type)
+             ->commit();
+    echo $success;
 }

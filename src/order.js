@@ -166,14 +166,53 @@ function process_order(order){
 	"<h4>Time:</h4>" +
 	time+
 	"<h4>Orders:</h4>"+
-	loadItems(order);
+	add_item_button(order)+
+	load_local_items(order);
 }
 
-function loadItems(order){
+function add_item_button(order){
+    return $('<a></a>', {
+	href: '#',
+	class: 'accent-text',
+	onclick: 'add_item_to_order('+order["id"]+');',
+	text: "Add item"
+    }).prop('outerHTML');
+}
+
+function add_item_to_order(order){
+    var item = "";
+    do{
+	item = prompt('Write an aproximation of the items name');
+    }while(!item ||
+	   !confirm(get_approximation(item)["nombre"] + " will be added, is this ok?"));
+    commit_item_to_order(get_approximation(item), order);
+}
+
+function get_approximation(name){
+    return catalog.filter(function(e){
+	return e["nombre"].toUpperCase().includes(name.toUpperCase());
+    })[0];
+}
+
+function commit_item_to_order(item, order){
+    $.ajax({
+	type: "POST",
+	url: "orders-api.php",
+	data: {method: "commit_item", args: JSON.stringify([item["id"], order])},
+	success: function(data){
+	    console.log(data);
+	}
+    });
+    location.reload();
+}
+
+function load_local_items(order){
     var local_items = items.filter(function(e){return e["comanda"] == order["id"];});
     var items_list = "<ul>";
     local_items.forEach(function(e){
-	items_list += "<li>" + get_name_from_catalog(e["articulo"])["nombre"] + "</li>";
+	items_list += "<li>" +
+	    get_name_from_catalog(e["articulo"])["nombre"] +
+	    "</li>";
     });
     return items_list + "</ul>";
 }
