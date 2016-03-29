@@ -55,9 +55,17 @@ class DatabaseQuery {
         return $this->bind($values);
     }
 
+    public function delete(){
+        return $this->bind("DELETE ");
+    }
+
     public function commit(){
         $query = $this->query .";\n";
         return $this->database->exec($query);
+    }
+
+    public function get_query(){
+        return $this->query;
     }
 
     public function execute(){

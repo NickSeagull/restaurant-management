@@ -98,3 +98,18 @@ function commit_item($args){
              ->commit();
     echo $success;
 }
+
+function delete_item($args){
+    $database_query = new DatabaseQuery();
+
+    $item = $args[0];
+    $order = $args[1];
+
+    $database_query = new DatabaseQuery();
+    $success = $database_query
+             ->delete()
+             ->from("lineascomanda")
+             ->where("id = (select max(id) from lineascomanda where comanda = $order AND articulo = $item)")
+             ->commit();
+    echo $success;
+}
