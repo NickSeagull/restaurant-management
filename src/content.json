@@ -22,6 +22,7 @@
 	"main": "content_main.html",
 	"login": "content_login.html",
 	"menu": "content_menu.html",
-	"orders": "content_orders.html"
+	"orders": "content_orders.html",
+	"cooking": "content_cooking.html"
     }
 }
