@@ -136,3 +136,16 @@ function checkout($order){
 
     echo $price;
 }
+
+function new_order($table_id){
+    $waiter = $_SESSION['id'];
+    $time = time();
+
+    $database_query = new DatabaseQuery();
+    $success = $database_query
+             ->insert_into("comandas")
+             ->fields("mesa", "camareroapertura", "horaapertura")
+             ->values($table_id, $waiter, $time)
+             ->commit();
+    echo $success;
+}

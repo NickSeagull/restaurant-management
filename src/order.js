@@ -148,12 +148,26 @@ function build_table_order_menu(table, table_id){
 
 function order_exists_for(id){
     return orders.filter(function(e){
-	return e["id"] == id && e["horacierre"] == 0;
+	return e["mesa"] == id && e["horacierre"] == 0;
     }).length != 0;
 }
 
+function get_order_for(id){
+    return orders.filter(function(e){
+	return e["mesa"] == id && e["horacierre"] == 0;
+    })[0];
+}
+
 function new_order(table_id){
-    orders[table_id] = {"ayy": "lmao"};
+    $.ajax({
+	type: "POST",
+	url: "orders-api.php",
+	data: {method: "new_order", args: table_id},
+	success: function(data){
+	    console.log(data);
+	    location.reload();
+	}
+    });
 }
 
 function process_order(order){
@@ -254,12 +268,12 @@ function remove_order_item(item, order){
     $.ajax({
 	type: "POST",
 	url: "orders-api.php",
-	data: {method: "delete_item", args: JSON.stringify([item["id"], order["id"]])},
+	data: {method: "delete_item", args: JSON.stringify([item["articulo"], order["id"]])},
 	success: function(data){
 	    console.log(data);
+	    location.reload();
 	}
     });
-    location.reload();
 }
 
 function get_name_from_catalog(id){
@@ -268,8 +282,3 @@ function get_name_from_catalog(id){
     })[0];
 }
 
-function get_order_for(id){
-    return orders.filter(function(e){
-	return e["id"] == id && e["horacierre"] == 0;
-    })[0];
-}
