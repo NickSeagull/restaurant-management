@@ -34,3 +34,13 @@ function get_waiting(){
            ->execute_and_get_pdo();
     echo json_encode($items);
 }
+
+function get_cooking(){
+    $database_query = new DatabaseQuery();
+    $items = $database_query
+           ->select("*")
+           ->from("lineascomanda")
+           ->where("horainicio > 0 and tipo = 1 and horafinalizacion = 0")
+           ->execute_and_get_pdo();
+    echo json_encode($items);
+}
