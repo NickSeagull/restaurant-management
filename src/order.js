@@ -245,19 +245,27 @@ function commit_item_to_order(item, order){
 }
 
 function load_local_items(order){
-    var local_items = items.filter(function(e){return e["comanda"] == order["id"];});
+    var local_items = items.filter(function(e){return e["comanda"] == order["id"] &&
+					       e["horaservicio"] == 0;});
     var items_list = $('<ul class="item-list"></ul>');
     local_items.forEach(function(e){
 	items_list.append($('<li class="item"></li>').append(
 	    $('<p></p>', {
 		text: get_name_from_catalog(e["articulo"])["nombre"] + "\t"
 	    }).append(
-	    $('<a></a>', {
-		text: "Remove",
-		href: '#',
-		class: 'accent-text',
-		onclick: "remove_order_item('"+JSON.stringify(e)+"','"+JSON.stringify(order)+"');"
-	    }))
+		$('<a></a>', {
+		    text: "Remove",
+		    href: '#',
+		    class: 'accent-text',
+		    onclick: "remove_order_item('"+JSON.stringify(e)+"','"+JSON.stringify(order)+"');"
+		}).append(
+		    $('<a></a>', {
+			text: "Serve",
+			href: '#',
+			class: 'accent-text',
+			onclick: "serve_order_item('"+JSON.stringify(e)+"','"+JSON.stringify(order)+"');"
+		    })
+		))
 	));
     });
     return items_list.prop('outerHTML');
@@ -270,6 +278,20 @@ function remove_order_item(item, order){
 	type: "POST",
 	url: "orders-api.php",
 	data: {method: "delete_item", args: JSON.stringify([item["articulo"], order["id"]])},
+	success: function(data){
+	    console.log(data);
+	    location.reload();
+	}
+    });
+}
+
+function serve_order_item(item, order){
+    item = JSON.parse(item);
+    order = JSON.parse(order);
+    $.ajax({
+	type: "POST",
+	url: "orders-api.php",
+	data: {method: "serve_item", args: JSON.stringify([item["articulo"], order["id"]])},
 	success: function(data){
 	    console.log(data);
 	    location.reload();

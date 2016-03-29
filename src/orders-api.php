@@ -150,3 +150,19 @@ function new_order($table_id){
              ->commit();
     echo $success;
 }
+
+function serve_item($args){
+    $item = $args[0];
+    $order = $args[1];
+    $time = time();
+
+    $database_query = new DatabaseQuery();
+    $success = $database_query
+             ->update("lineascomanda")
+             ->set("horaservicio = $time")
+             ->where("comanda = $order AND articulo = $item")
+             ->commit();
+
+    echo $success;
+
+}
