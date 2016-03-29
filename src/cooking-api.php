@@ -44,3 +44,31 @@ function get_cooking(){
            ->execute_and_get_pdo();
     echo json_encode($items);
 }
+
+function start_cooking($item){
+    $time = time();
+    $order = $item[1];
+    $articulo = $item[0];
+    
+    $database_query = new DatabaseQuery();
+    $items = $database_query
+           ->update("lineascomanda")
+           ->set("horainicio = $time")
+           ->where("comanda = $order and articulo = $articulo")
+           ->commit();
+    echo $items;
+}
+
+function finish_cooking($item){
+    $time = time();
+    $order = $item[1];
+    $articulo = $item[0];
+    
+    $database_query = new DatabaseQuery();
+    $items = $database_query
+           ->update("lineascomanda")
+           ->set("horafinalizacion = $time")
+           ->where("comanda = $order and articulo = $articulo")
+           ->commit();
+    echo $items;
+}

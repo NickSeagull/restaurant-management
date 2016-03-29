@@ -28,7 +28,6 @@ function load_waiting_items(){
 	url: "cooking-api.php",
 	data: {method: "get_waiting"},
 	success: function(data){
-	    console.log(data);
 	    waiting_items = JSON.parse(data);
 	}
     });
@@ -40,7 +39,6 @@ function load_cooking_items(){
 	url: "cooking-api.php",
 	data: {method: "get_cooking"},
 	success: function(data){
-	    console.log(data);
 	    cooking_items = JSON.parse(data);
 	}
     });
@@ -90,10 +88,28 @@ function get_from_catalog(id){
 
 function start_cooking(waiting_item){
     waiting_item = JSON.parse(waiting_item);
-    alert("ayy, imma cook "+get_from_catalog(waiting_item["articulo"])["nombre"]);
+    $.ajax({
+	type: "POST",
+	url: "cooking-api.php",
+	data: {method: "start_cooking", args: JSON.stringify(
+	    [waiting_item["articulo"], waiting_item["comanda"]])},
+	success: function(data){
+	    catalog = JSON.parse(data);
+	    location.reload();
+	}
+    });
 }
 
-function finish_cooking(cooking_item){
-    cooking_item = JSON.parse(cooking_item);
-    alert("ayy, imma stop cooking "+get_from_catalog(cooking_item["articulo"])["nombre"]);
+function finish_cooking(waiting_item){
+    waiting_item = JSON.parse(waiting_item);
+    $.ajax({
+	type: "POST",
+	url: "cooking-api.php",
+	data: {method: "finish_cooking", args: JSON.stringify(
+	    [waiting_item["articulo"], waiting_item["comanda"]])},
+	success: function(data){
+	    catalog = JSON.parse(data);
+	    location.reload();
+	}
+    });
 }
