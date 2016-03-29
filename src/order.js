@@ -220,6 +220,7 @@ function checkout_order(order_id){
 	    data: {method: "checkout", args: order_id},
 	    success: function(data){
 		alert("TOTAL TO PAY: "+data+"€");
+		location.reload();
 	    }
 	});
     }

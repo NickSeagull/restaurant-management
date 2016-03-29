@@ -121,6 +121,7 @@ function checkout($order){
     $prices = $database_query
             ->select("PVP")
             ->from("articulos")
+            ->where("id in (select articulo from lineascomanda where comanda = $order)")
             ->execute_for_all();
     $price = 0.0;
     foreach($prices as $p){
