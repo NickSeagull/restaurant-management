@@ -148,7 +148,7 @@ function build_table_order_menu(table, table_id){
 
 function order_exists_for(id){
     return orders.filter(function(e){
-	return e["id"] == id;
+	return e["id"] == id && e["horacierre"] == 0;
     }).length != 0;
 }
 
@@ -166,7 +166,8 @@ function process_order(order){
 	"<h4>Time:</h4>" +
 	time+
 	"<h4>Orders:</h4>"+
-	add_item_button(order)+
+	add_item_button(order)+ " - "+
+	add_checkout_button(order)+
 	load_local_items(order);
 }
 
@@ -179,6 +180,15 @@ function add_item_button(order){
     }).prop('outerHTML');
 }
 
+function add_checkout_button(order){
+    return $('<a></a>', {
+	href: '#',
+	class: 'accent-text',
+	onclick: 'checkout_order('+order["id"]+');',
+	text: "Checkout"
+    }).prop('outerHTML');
+}
+
 function add_item_to_order(order){
     var item = "";
     do{
@@ -186,6 +196,19 @@ function add_item_to_order(order){
     }while(!item ||
 	   !confirm(get_approximation(item)["nombre"] + " will be added, is this ok?"));
     commit_item_to_order(get_approximation(item), order);
+}
+
+function checkout_order(order_id){
+    if(confirm("Are you sure you want to checkout order N" + order_id + "?")){
+	$.ajax({
+	    type: "POST",
+	    url: "orders-api.php",
+	    data: {method: "checkout", args: order_id},
+	    success: function(data){
+		alert("TOTAL TO PAY: "+data+"€");
+	    }
+	});
+    }
 }
 
 function get_approximation(name){
@@ -247,6 +270,6 @@ function get_name_from_catalog(id){
 
 function get_order_for(id){
     return orders.filter(function(e){
-	return e["id"] == id;
+	return e["id"] == id && e["horacierre"] == 0;
     })[0];
 }

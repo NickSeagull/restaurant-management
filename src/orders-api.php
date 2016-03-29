@@ -113,3 +113,26 @@ function delete_item($args){
              ->commit();
     echo $success;
 }
+
+function checkout($order){
+    $database_query = new DatabaseQuery();
+    $time = time();
+    $waiter = $_SESSION['id'];
+    $prices = $database_query
+            ->select("PVP")
+            ->from("articulos")
+            ->execute_for_all();
+    $price = 0.0;
+    foreach($prices as $p){
+        $price += $p;
+    }
+
+    $database_query = new DatabaseQuery();
+    $success = $database_query
+             ->update("comandas")
+             ->set("PVP = $price, camarerocierre = $waiter, horacierre = $time")
+             ->where("id = $order")
+             ->commit();
+
+    echo $price;
+}
